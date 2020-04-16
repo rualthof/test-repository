@@ -16,9 +16,8 @@ app.secret_key = "rudimar"  # if publishing, do not want this key to be visible
 api = Api(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # the sqlAlchemy modification tracker does the job
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ugykgauycmywxv:701bf83f2c3578d738436980432836bcfed076dbedbe70f29aacef014dbfab16@ec2-18-233-137-77.compute-1.amazonaws.com:5432/derqg7tdiv2err'
 # second is the default value
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['PROPAGATE_EXCEPTION'] = True
 
 db.init_app(app)

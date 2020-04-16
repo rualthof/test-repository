@@ -1,5 +1,11 @@
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required, get_jwt_claims, jwt_optional, get_jwt_identity
+from flask_jwt_extended import (
+    jwt_required,
+    fresh_jwt_required,
+    get_jwt_claims,
+    jwt_optional,
+    get_jwt_identity
+)
 # from flask_jwt import jwt_required
 from models.item import ItemModel
 
@@ -22,13 +28,14 @@ class Item(Resource):
     )
 
     # @jwt_required()
-    @jwt_required
+    @jwt_required  # Only works with a token provided, fresh or not
     def get(self, name):
         item = ItemModel.find_by_name(name)
         if item:
             return item.json(), 200
         return {'message': 'Item not found '}, 404
 
+    @fresh_jwt_required
     def post(self, name):
         # checking for unique name
         if ItemModel.find_by_name(name):
