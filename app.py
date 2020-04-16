@@ -17,6 +17,7 @@ api = Api(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # the sqlAlchemy modification tracker does the job
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')  # second is the default value
+
 db.init_app(app)
 
 @app.before_first_request
