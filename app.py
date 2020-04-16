@@ -1,3 +1,5 @@
+import os # for reading heroku DATABASE_URL
+
 from flask import Flask
 from flask_restful import Resource, Api
 from flask_jwt import JWT
@@ -14,7 +16,7 @@ app.secret_key = "rudimar"  # if publishing, do not want this key to be visible
 api = Api(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # the sqlAlchemy modification tracker does the job
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')  # second is the default value
 db.init_app(app)
 
 @app.before_first_request
@@ -35,4 +37,5 @@ api.add_resource(StoreList, '/stores')
 
 if __name__ == "__main__":
     print("oi")
+    print(app.config['SQLALCHEMY_DATABASE_URI'])
     app.run(debug=True)
